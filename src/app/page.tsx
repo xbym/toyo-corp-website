@@ -70,22 +70,22 @@ export default function HomePage() {
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12 text-[#1E2A3B]">客户评价</h2>
             <div className="grid gap-6 lg:grid-cols-2">
-              <Card className="bg-white border-none shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-[#1E2A3B]">小林同学 - 成功进入东京大学</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-[#4A5568]">"感谢东阳株式会社的帮助，我成功进入了梦想中的东京大学。他们的专业指导让我的留学之路变得轻松许多。"</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-white border-none shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-[#1E2A3B]">王同学 - 顺利获得日本工作签证</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-[#4A5568]">"东阳株式会社不仅帮助我完成了语言学习，还为我提供了就业指导，让我顺利在日本找到了理想的工作。"</p>
-                </CardContent>
-              </Card>
+            <Card className="bg-white border-none shadow-lg">
+  <CardHeader>
+    <CardTitle className="text-[#1E2A3B]">小林同学 - 成功进入东京大学</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p className="text-[#4A5568]">{"\"感谢东阳株式会社的帮助，我成功进入了梦想中的东京大学。他们的专业指导让我的留学之路变得轻松许多。\""}</p>
+  </CardContent>
+</Card>
+<Card className="bg-white border-none shadow-lg">
+  <CardHeader>
+    <CardTitle className="text-[#1E2A3B]">王同学 - 顺利获得日本工作签证</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p className="text-[#4A5568]">{"\"东阳株式会社不仅帮助我完成了语言学习，还为我提供了就业指导，让我顺利在日本找到了理想的工作。\""}</p>
+  </CardContent>
+</Card>
             </div>
           </div>
         </section>

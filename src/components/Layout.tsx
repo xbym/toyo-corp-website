@@ -1,10 +1,15 @@
 import Link from 'next/link'
+import React from 'react'
 
-export default function Layout({ children }) {
+interface LayoutProps {
+  children: React.ReactNode
+}
+
+export default function Layout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="px-4 lg:px-6 h-14 flex items-center">
-        <Link className="flex items-center justify-center" href="/">
+        <Link href="/" className="flex items-center justify-center">
           <MountainIcon className="h-6 w-6" />
           <span className="sr-only">东阳株式会社</span>
         </Link>
@@ -41,7 +46,7 @@ export default function Layout({ children }) {
   )
 }
 
-function MountainIcon(props) {
+function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Image from 'next/image'
 
 export default function ContactPage() {
   return (
@@ -52,14 +53,15 @@ export default function ContactPage() {
                       <strong>电子邮件：</strong> info@toyo-corp.jp
                     </p>
                     <div className="aspect-[16/9] overflow-hidden rounded-lg">
-                      <img
-                        alt="Map"
-                        className="object-cover w-full h-full"
-                        height="400"
-                        src="/placeholder.svg?height=400&width=600"
-                        width="600"
-                      />
-                    </div>
+  <Image
+    alt="Map"
+    src="/placeholder.svg"
+    width={600}
+    height={400}
+    layout="responsive"
+    className="object-cover"
+  />
+</div>
                   </div>
                 </CardContent>
               </Card>
