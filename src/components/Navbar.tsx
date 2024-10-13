@@ -28,12 +28,12 @@ export function Navbar() {
             <MountainIcon className="h-6 w-6 mr-2" />
             <span className="font-bold text-lg">东阳株式会社</span>
           </Link>
-          <nav className="hidden md:flex space-x-4">
+          <nav className="hidden md:flex space-x-6 items-center ml-auto mr-4">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium hover:text-primary-foreground/80 transition-colors"
+                className="text-base font-medium hover:text-primary-foreground/80 transition-colors"
               >
                 {link.label}
               </Link>

@@ -1,140 +1,211 @@
+'use client'
+
+/*import Image from 'next/image'*/
 import Link from 'next/link'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+/*import { Button } from '@/components/ui/button'*/
+import { Card, CardContent } from '@/components/ui/card'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import Footer from '@/components/Footer'
+import LiveClassesSidebar from '@/components/LiveClassesSidebar'
+import ConsultationSidebar from '@/components/ConsultationSidebar'
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#FFF0F5]">
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="w-full py-24 md:py-32 lg:py-40 bg-[#FFF0F5]">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl/none text-[#1E2A3B]">
-                塑造您的日本梦想
-              </h1>
-              <p className="mx-auto max-w-[700px] text-[#4A5568] md:text-xl dark:text-[#A0AEC0]">
-                东阳株式会社 - 您的房产投资与留学服务专家
-              </p>
-              <Button className="bg-[#FF6B6B] hover:bg-[#FF8787] text-white">
-                探索我们的服务
-              </Button>
+    <div className="flex flex-col min-h-screen">
+      {/* 滚动广告横幅 */}
+      <section className="w-full h-40 relative overflow-hidden">
+        <div className="flex absolute left-0 animate-carousel">
+          {[1, 2, 3].map((num) => (
+            <div
+              key={num}
+              className="w-[1200px] h-[160px] flex items-center justify-center text-white text-2xl font-bold"
+              style={{ backgroundColor: getRandomColor() }}
+            >
+              广告{num}
             </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 主要分类 */}
+      <section className="w-full py-4 bg-blue-600">
+        <div className="container mx-auto px-4 flex justify-between">
+          {['学部文科', '学部理科', '研究生', '语言学校', '专门学校', '高中'].map((category) => (
+            <Link key={category} href={`/category/${category}`} className="text-white hover:underline">
+              {category}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* 在线模考和全部分类 */}
+      <section className="w-full py-4 bg-gray-100">
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <Link href="/online-exam" className="flex-shrink-0">
+            <div
+              className="w-[200px] h-[50px] flex items-center justify-center text-white font-bold"
+              style={{ backgroundColor: getRandomColor() }}
+            >
+              在线模考
+            </div>
+          </Link>
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="全部分类" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="category1">留学申请</SelectItem>
+              <SelectItem value="category2">语言学习</SelectItem>
+              <SelectItem value="category3">考试准备</SelectItem>
+              <SelectItem value="category4">生活指南</SelectItem>
+              <SelectItem value="category5">就业支持</SelectItem>
+              <SelectItem value="category6">文化体验</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </section>
+
+      {/* 主要内容区域 */}
+      <div className="flex flex-col md:flex-row">
+        {/* 左侧边栏 - 直播课展示 */}
+        <LiveClassesSidebar />
+
+        {/* 中间主要内容 */}
+        <main className="flex-1 p-4">
+          {/* 新闻展示 */}
+          <h2 className="text-2xl font-bold mb-4">最新资讯</h2>
+          {[1, 2, 3].map((row) => (
+            <div key={row} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              {[1, 2].map((col) => (
+                <Card key={`${row}-${col}`}>
+                  <div
+                    className="w-full h-[150px] flex items-center justify-center text-white font-bold"
+                    style={{ backgroundColor: getRandomColor() }}
+                  >
+                    {`新闻${row}-${col}`}
+                  </div>
+                  <CardContent>
+                    <h3 className="font-bold mb-2">新闻标题 {row}-{col}</h3>
+                    <p className="text-sm text-gray-600 mb-2">这里是新闻摘要，简要介绍新闻内容...</p>
+                    <Link href={`/news/${row}-${col}`} className="text-blue-600 hover:underline text-sm">
+                      阅读更多
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ))}
+        </main>
+
+        {/* 右侧边栏 - 咨询展示 */}
+        <ConsultationSidebar />
+      </div>
+
+      {/* 窄广告条 */}
+      {[1, 2].map((num) => (
+        <section key={num} className="w-full py-2">
+          <div className="container mx-auto px-4">
+            <Link href={`/ad/${num}`}>
+              <div
+                className="w-full h-[60px] flex items-center justify-center text-white font-bold"
+                style={{ backgroundColor: getRandomColor() }}
+              >
+                {`广告条${num}`}
+              </div>
+            </Link>
           </div>
         </section>
+      ))}
 
-        {/* Services Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12 text-[#1E2A3B]">我们的核心服务</h2>
-            <div className="grid gap-6 lg:grid-cols-3">
-              <Card className="bg-[#F8FAFC] border-none shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-[#1E2A3B]">
-                    <svg className="w-6 h-6 mr-2 text-[#FF6B6B]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                    房地产投资
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-[#4A5568]">在日本主要城市寻找高回报的房产投资机会，我们提供专业的市场分析和投资建议。[^1]</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-[#F8FAFC] border-none shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-[#1E2A3B]">
-                    <svg className="w-6 h-6 mr-2 text-[#FF6B6B]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /></svg>
-                    留学服务
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-[#4A5568]">从语言学校到大学申请，我们提供全面的留学咨询和申请服务，助您实现留学梦想。[^1]</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-[#F8FAFC] border-none shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-[#1E2A3B]">
-                    <svg className="w-6 h-6 mr-2 text-[#FF6B6B]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                    职业培训
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-[#4A5568]">提供专业的职业培训和就业指导，帮助您在日本职场获得成功。[^1]</p>
-                </CardContent>
-              </Card>
+      {/* 额外卡片展示 */}
+      <section className="w-full py-8">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold mb-4">热门话题</h2>
+          {[1, 2, 3].map((row) => (
+            <div key={row} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              {[1, 2, 3, 4].map((col) => (
+                <Card key={`${row}-${col}`}>
+                  <div
+                    className="w-full h-[150px] flex items-center justify-center text-white font-bold"
+                    style={{ backgroundColor: getRandomColor() }}
+                  >
+                    {`话题${row}-${col}`}
+                  </div>
+                  <CardContent>
+                    <h3 className="font-bold mb-2">话题标题 {row}-{col}</h3>
+                    <p className="text-sm text-gray-600 mb-2">这里是话题简介，概述主要内容...</p>
+                    <Link href={`/topic/${row}-${col}`} className="text-blue-600 hover:underline text-sm">
+                      了解更多
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-          </div>
-        </section>
+          ))}
+        </div>
+      </section>
 
-        {/* Testimonials Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#F8FAFC]">
-          <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12 text-[#1E2A3B]">客户评价</h2>
-            <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="bg-white border-none shadow-lg">
-  <CardHeader>
-    <CardTitle className="text-[#1E2A3B]">小林同学 - 成功进入东京大学</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <p className="text-[#4A5568]">{"\"感谢东阳株式会社的帮助，我成功进入了梦想中的东京大学。他们的专业指导让我的留学之路变得轻松许多。\""}</p>
-  </CardContent>
-</Card>
-<Card className="bg-white border-none shadow-lg">
-  <CardHeader>
-    <CardTitle className="text-[#1E2A3B]">王同学 - 顺利获得日本工作签证</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <p className="text-[#4A5568]">{"\"东阳株式会社不仅帮助我完成了语言学习，还为我提供了就业指导，让我顺利在日本找到了理想的工作。\""}</p>
-  </CardContent>
-</Card>
-            </div>
-          </div>
-        </section>
+      {/* 公司背景介绍横幅 */}
+      <section className="w-full py-16 bg-gray-800 text-white relative">
+        <div
+          className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold"
+          style={{ backgroundColor: getRandomColor() }}
+        >
+          公司背景
+        </div>
+        <div className="container mx-auto px-4 relative  z-10">
+          <h2 className="text-3xl font-bold mb-4">关于東陽株式会社</h2>
+          <p className="max-w-2xl">
+            東陽株式会社成立于20XX年，是一家专注于为留学生提供全方位服务的教育咨询公司。
+            我们的使命是帮助每一位学生实现他们在日本的学习和职业目标，为他们的未来铺平道路。
+            凭借丰富的经验和专业的团队，我们为学生提供从留学申请到就业支持的一站式服务。
+          </p>
+        </div>
+      </section>
 
-        {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-[#FFF0F5]">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-[#1E2A3B]">准备开始您的日本之旅?</h2>
-              <p className="mx-auto max-w-[700px] text-[#4A5568] md:text-xl">
-                无论您是寻找投资机会还是规划留学，我们都能为您提供专业的建议和支持。
-              </p>
-              <Button className="bg-[#FF6B6B] hover:bg-[#FF8787] text-white">
-                立即联系我们
-              </Button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="w-full py-6 bg-[#1E2A3B] text-white">
-        <div className="container px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">关于我们</h3>
-              <p className="text-sm">东阳株式会社是您的房产投资与留学服务专家，致力于帮助您实现日本梦想。</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">联系方式</h3>
-              <p className="text-sm">地址：东京都新宿区西新宿1-1-1</p>
-              <p className="text-sm">电话：+81 3-1234-5678</p>
-              <p className="text-sm">邮箱：info@toyo-corp.jp</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">快速链接</h3>
-              <ul className="text-sm space-y-2">
-                <li><Link href="/services" className="hover:text-[#FF6B6B]">服务项目</Link></li>
-                <li><Link href="/about" className="hover:text-[#FF6B6B]">关于我们</Link></li>
-                <li><Link href="/contact" className="hover:text-[#FF6B6B]">联系我们</Link></li>
-                <li><Link href="/privacy" className="hover:text-[#FF6B6B]">隐私政策</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-8 text-center text-sm">
-            <p>© 2024 东阳株式会社. All rights reserved.</p>
+      {/* 公司功能模块 */}
+      <section className="w-full py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold mb-8 text-center">我们的服务</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { title: "在线课堂", desc: "提供高质量的在线日语和专业课程" },
+              { title: "学院系统", desc: "全面的学习管理和进度跟踪系统" },
+              { title: "留学咨询", desc: "个性化的留学规划和申请支持" },
+              { title: "就业指导", desc: "为在日就业提供全面的career支持" }
+            ].map((service, index) => (
+              <div key={index} className="text-center">
+                <div
+                  className="w-[100px] h-[100px] mx-auto mb-4 rounded-full flex items-center justify-center text-white font-bold"
+                  style={{ backgroundColor: getRandomColor() }}
+                >
+                  图标{index + 1}
+                </div>
+                <h3 className="font-bold mb-2">{service.title}</h3>
+                <p className="text-sm text-gray-600">{service.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* 页脚 */}
+      <Footer />
     </div>
   )
 }
