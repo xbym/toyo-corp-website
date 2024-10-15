@@ -1,8 +1,8 @@
 'use client'
 
-/*import Image from 'next/image'*/
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-/*import { Button } from '@/components/ui/button'*/
+import Image from 'next/image'
 import { Card, CardContent } from '@/components/ui/card'
 import {
   Select,
@@ -24,19 +24,55 @@ function getRandomColor() {
   return color;
 }
 
+interface HomepageSection {
+  id: string;
+  title: string;
+  content?: string;
+  items?: Array<{ title: string; description: string }>;
+  imageUrl?: string;
+}
+
 export default function HomePage() {
+  const [homepageData, setHomepageData] = useState<HomepageSection[]>([])
+  const [imageUrls, setImageUrls] = useState<Record<string, string>>({})
+
+  useEffect(() => {
+    fetch('/api/getHomepage')
+      .then(response => response.json())
+      .then(data => {
+        setHomepageData(data)
+        const urls: Record<string, string> = {}
+        data.forEach((section: HomepageSection) => {
+          if (section.imageUrl) {
+            urls[section.id] = section.imageUrl
+          }
+        })
+        setImageUrls(urls)
+      })
+      .catch(error => console.error('Error fetching homepage data:', error))
+  }, [])
+
+  if (homepageData.length === 0) {
+    return <div>Loading...</div>
+  }
+
+  const adsSection = homepageData.find(section => section.id === 'ads')
+  const categoriesSection = homepageData.find(section => section.id === 'categories')
+  const aboutSection = homepageData.find(section => section.id === 'about')
+  const servicesSection = homepageData.find(section => section.id === 'services')
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* 滚动广告横幅 */}
       <section className="w-full h-40 relative overflow-hidden">
         <div className="flex absolute left-0 animate-carousel">
-          {[1, 2, 3].map((num) => (
+          {adsSection && adsSection.items && adsSection.items.map((ad, index) => (
             <div
-              key={num}
+              key={index}
               className="w-[1200px] h-[160px] flex items-center justify-center text-white text-2xl font-bold"
               style={{ backgroundColor: getRandomColor() }}
             >
-              广告{num}
+              {ad.title}
             </div>
           ))}
         </div>
@@ -45,9 +81,9 @@ export default function HomePage() {
       {/* 主要分类 */}
       <section className="w-full py-4 bg-blue-600">
         <div className="container mx-auto px-4 flex justify-between">
-          {['学部文科', '学部理科', '研究生', '语言学校', '专门学校', '高中'].map((category) => (
-            <Link key={category} href={`/category/${category}`} className="text-white hover:underline">
-              {category}
+          {categoriesSection && categoriesSection.items && categoriesSection.items.map((category, index) => (
+            <Link key={index} href={`/category/${category.title}`} className="text-white hover:underline">
+              {category.title}
             </Link>
           ))}
         </div>
@@ -162,18 +198,26 @@ export default function HomePage() {
 
       {/* 公司背景介绍横幅 */}
       <section className="w-full py-16 bg-gray-800 text-white relative">
-        <div
-          className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold"
-          style={{ backgroundColor: getRandomColor() }}
-        >
-          公司背景
-        </div>
-        <div className="container mx-auto px-4 relative  z-10">
+        {imageUrls['about'] ? (
+          <Image
+            src={imageUrls['about']}
+            alt="公司背景"
+            layout="fill"
+            objectFit="cover"
+            className="absolute inset-0"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 flex items-center justify-center text-white text-3xl font-bold"
+            style={{ backgroundColor: getRandomColor() }}
+          >
+            公司背景
+          </div>
+        )}
+        <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-3xl font-bold mb-4">关于東陽株式会社</h2>
           <p className="max-w-2xl">
-            東陽株式会社成立于20XX年，是一家专注于为留学生提供全方位服务的教育咨询公司。
-            我们的使命是帮助每一位学生实现他们在日本的学习和职业目标，为他们的未来铺平道路。
-            凭借丰富的经验和专业的团队，我们为学生提供从留学申请到就业支持的一站式服务。
+            {aboutSection && aboutSection.content}
           </p>
         </div>
       </section>
@@ -183,12 +227,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold mb-8 text-center">我们的服务</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              { title: "在线课堂", desc: "提供高质量的在线日语和专业课程" },
-              { title: "学院系统", desc: "全面的学习管理和进度跟踪系统" },
-              { title: "留学咨询", desc: "个性化的留学规划和申请支持" },
-              { title: "就业指导", desc: "为在日就业提供全面的career支持" }
-            ].map((service, index) => (
+            {servicesSection && servicesSection.items && servicesSection.items.map((service, index) => (
               <div key={index} className="text-center">
                 <div
                   className="w-[100px] h-[100px] mx-auto mb-4 rounded-full flex items-center justify-center text-white font-bold"
@@ -197,7 +236,7 @@ export default function HomePage() {
                   图标{index + 1}
                 </div>
                 <h3 className="font-bold mb-2">{service.title}</h3>
-                <p className="text-sm text-gray-600">{service.desc}</p>
+                <p className="text-sm text-gray-600">{service.description}</p>
               </div>
             ))}
           </div>

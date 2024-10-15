@@ -1,0 +1,55 @@
+[
+  {
+    "id": "ads",
+    "title": "滚动广告横幅",
+    "items": [
+      {
+        "title": "新概念1",
+        "description": "广告1描述"
+      },
+      {
+        "title": "广告2",
+        "description": "广告2描述"
+      },
+      {
+        "title": "广告3",
+        "description": "广告3描述"
+      }
+    ]
+  },
+  {
+    "id": "categories",
+    "title": "主要分类",
+    "items": [
+      {
+        "title": "学部",
+        "description": ""
+      },
+      {
+        "title": "学部理科",
+        "description": ""
+      },
+      {
+        "title": "研究生",
+        "description": ""
+      },
+      {
+        "title": "语言学校",
+        "description": ""
+      },
+      {
+        "title": "专门学校",
+        "description": ""
+      },
+      {
+        "title": "高中",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "id": "about",
+    "title": "关于東陽株式会社",
+    "content": "東陽株式会社成立于2020年，是一家专注于为留学生提供全方位服务的教育咨询公司。我们的使命是帮助每一位学生实现他们在日本的学习和职业目标，为他们的未来铺平道路。凭借丰富的经验和专业的团队，我们为学生提供从留学申请到就业支持的一站式服务。"
+  }
+]

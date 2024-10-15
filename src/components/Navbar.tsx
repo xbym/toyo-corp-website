@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Menu } from "lucide-react"
+import { Menu, MountainIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -13,8 +13,12 @@ import {
 const links = [
   { href: "/", label: "首页" },
   { href: "/services", label: "服务" },
+  { href: "/language-schools", label: "语言学校" },
+  { href: "/private-school", label: "私塾" },
+  { href: "/sgu-study", label: "SGU学校" },
   { href: "/about", label: "关于我们" },
   { href: "/contact", label: "联系我们" },
+  { href: "/admin/homepage", label: "后台管理" },
 ]
 
 export function Navbar() {
@@ -64,24 +68,5 @@ export function Navbar() {
         </div>
       </div>
     </header>
-  )
-}
-
-function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-    </svg>
   )
 }
